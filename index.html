@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<!--
+  ПРОСТІР КРАСИ «ІЛОНА» — односторінковий сайт (HTML + CSS + мінімум JS, без збірки)
+
+  ЩО ДЕ ЗМІНЮВАТИ:
+  1. Кольори — у блоці :root (--accent — акцентний бордово-рожевий).
+  2. Майстри, послуги та ціни — масив masters у <script> внизу файлу (одне місце).
+  3. Телефон — знайдіть [ТЕЛЕФОН] і tel:+380XXXXXXXXX (контакти + блок оренди).
+  4. Адреса, графік роботи, Instagram — секція «Контакти».
+  5. Фото — плейсхолдери [ФОТО]; як замінити на <img>, написано в TODO-коментарях.
+  6. Карта — TODO-коментар у блоці [КАРТА GOOGLE MAPS].
+
+  Публікація: GitHub Pages, гілка main, корінь репозиторію (див. README.md).
+-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Простір краси «Ілона» — салон краси у Волочиську</title>
+  <meta name="description" content="Салон краси «Ілона» у Волочиську: манікюр, зачіски, брови та вії, макіяж. Оберіть майстра і запишіться напряму — у Telegram, Viber або телефоном.">
+  <meta name="theme-color" content="#FBF4F1">
+
+  <!-- TODO: замініть [ЛОГІН] на ваш GitHub-нік після публікації -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="Простір краси «Ілона»">
+  <meta property="og:title" content="Простір краси «Ілона» — салон краси у Волочиську">
+  <meta property="og:description" content="Незалежні майстри в одному затишному просторі. Оберіть майстра та запишіться напряму.">
+  <meta property="og:url" content="https://[ЛОГІН].github.io/salon-ilona/">
+  <!-- TODO: для прев’ю в соцмережах додайте зображення 1200×630:
+       <meta property="og:image" content="https://[ЛОГІН].github.io/salon-ilona/og-image.jpg"> -->
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23A8405C'/%3E%3Ctext x='32' y='45' font-family='Georgia, serif' font-size='38' fill='%23FBF4F1' text-anchor='middle'%3E%D0%86%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== ПАЛІТРА ТА БАЗОВІ НАЛАШТУВАННЯ ===== */
+    :root {
+      --bg: #FBF4F1;
+      --ink: #2A1F1E;
+      --muted: #6B5B58;
+      --accent: #A8405C;
+      --accent-dark: #8C334B;
+      --pink: #EBCFC8;
+      --white: #FFFFFF;
+      --dark: #2A1F1E;
+      --line: #F1E1DC;
+      --radius: 24px;
+      --font-display: "Playfair Display", "Times New Roman", Georgia, serif;
+      --font-body: "Inter", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .wrap {
+      width: min(100% - 40px, 1120px);
+      margin-inline: auto;
+    }
+
+    .section { padding: 56px 0; }
+    .section--white { background: var(--white); }
+    .section--flush-top { padding-top: 8px; }
+
+    @media (min-width: 768px) {
+      .section { padding: 88px 0; }
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .section-head {
+      max-width: 640px;
+      margin-bottom: 32px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* ===== КНОПКИ ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 26px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(42, 31, 30, 0.22);
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .btn-sm {
+      min-height: 44px;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+
+    /* ===== ШАПКА ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(251, 244, 241, 0.92);
+      border-bottom: 1px solid rgba(42, 31, 30, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 70px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-right: auto;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav {
+      display: none;
+      position: absolute;
+      top: calc(100% - 4px);
+      left: 0;
+      right: 0;
+      z-index: 60;
+      flex-direction: column;
+      gap: 2px;
+      padding: 10px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(42, 31, 30, 0.16);
+    }
+
+    .nav.is-open { display: flex; }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .nav a:hover { background: var(--bg); }
+
+    .nav-toggle {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      background: transparent;
+      border: 1px solid rgba(42, 31, 30, 0.2);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .nav-toggle-bar {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--ink);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (min-width: 900px) {
+      .nav {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 0;
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .nav a {
+        min-height: 44px;
+        padding: 10px 14px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .nav a:hover {
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .nav-toggle { display: none; }
+    }
+
+    /* ===== ГОЛОВНИЙ ЕКРАН ===== */
+    .hero-grid {
+      display: grid;
+      gap: 40px;
+      align-items: center;
+      padding-block: 36px 56px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 6.4vw, 3.9rem);
+      margin-bottom: 20px;
+      text-wrap: balance;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .lead {
+      max-width: 52ch;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .hours {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 12px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(42, 31, 30, 0.12);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hours-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      top: 16%;
+      left: 4%;
+      width: 76%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(235, 207, 200, 0.6);
+      filter: blur(8px);
+    }
+
+    .arch {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 4 / 5;
+      padding: 18px;
+      background: var(--pink);
+      border-radius: 200px 200px 28px 28px;
+      box-shadow: 0 24px 60px rgba(42, 31, 30, 0.12);
+    }
+
+    .photo-slot {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      border: 2px dashed rgba(42, 31, 30, 0.28);
+      border-radius: 182px 182px 16px 16px;
+      color: var(--ink);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .photo-slot img,
+    .arch img {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
+    @media (min-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        padding-block: 56px 82px;
+      }
+    }
+
+    /* ===== МАЙСТРИ ===== */
+    .masters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .master-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      height: 100%;
+      padding: 26px 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(42, 31, 30, 0.05);
+    }
+
+    .avatar,
+    .avatar-img {
+      width: 88px;
+      height: 88px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      border: 2px dashed #D8BCB4;
+      color: var(--muted);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .avatar-img { object-fit: cover; }
+
+    .master-card h3 {
+      font-size: 1.32rem;
+      margin-bottom: 6px;
+    }
+
+    .master-role {
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .services {
+      width: 100%;
+      margin-bottom: 22px;
+      list-style: none;
+    }
+
+    .services li {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4px 12px;
+      padding: 9px 0;
+      border-bottom: 1px dashed #E7D6D0;
+      font-size: 0.93rem;
+    }
+
+    .services li > span:first-child {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .services li:last-child { border-bottom: 0; }
+
+    .price {
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .btn-card {
+      width: 100%;
+      margin-top: auto;
+      padding-inline: 16px;
+      font-size: 0.9rem;
+    }
+
+    .noscript-note {
+      margin-top: 24px;
+      padding: 16px 20px;
+      background: var(--bg);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ===== ЯК ЗАПИСАТИСЬ ===== */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .step {
+      padding: 26px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+
+    .step-num {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    /* ===== ОРЕНДА РОБОЧОГО МІСЦЯ ===== */
+    .rent-card {
+      position: relative;
+      display: grid;
+      gap: 26px;
+      overflow: hidden;
+      padding: 34px 24px;
+      background: var(--accent);
+      border-radius: var(--radius);
+      color: var(--white);
+    }
+
+    .rent-card::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .rent-card .eyebrow { color: var(--white); }
+
+    .rent-card h2 {
+      max-width: 24ch;
+      font-size: clamp(1.6rem, 3.6vw, 2.3rem);
+    }
+
+    .rent-card p {
+      max-width: 56ch;
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.98rem;
+    }
+
+    .btn-light {
+      position: relative;
+      z-index: 1;
+      align-self: start;
+      background: var(--white);
+      color: var(--accent-dark);
+    }
+
+    .btn-light:hover { background: var(--pink); }
+
+    @media (min-width: 780px) {
+      .rent-card {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 40px;
+        padding: 48px;
+      }
+    }
+
+    /* ===== КОНТАКТИ ===== */
+    .contacts {
+      padding: 56px 0;
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    @media (min-width: 768px) {
+      .contacts { padding: 88px 0; }
+    }
+
+    .contacts-grid {
+      display: grid;
+      gap: 36px;
+    }
+
+    .contacts h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 18px;
+      margin: 26px 0 30px;
+      list-style: none;
+    }
+
+    .contact-list li {
+      display: grid;
+      gap: 4px;
+    }
+
+    .c-label {
+      color: #C9B8B4;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .c-value {
+      font-size: 1.05rem;
+    }
+
+    .c-value a {
+      display: inline-block;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+    }
+
+    .c-value a:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+    .btn-outline-light {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.42);
+      color: var(--white);
+    }
+
+    .btn-outline-light:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--white);
+    }
+
+    .map {
+      min-height: 320px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .map iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      border: 0;
+    }
+
+    .map-placeholder {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 6px;
+      height: 100%;
+      min-height: 320px;
+      padding: 24px;
+      border: 2px dashed rgba(255, 255, 255, 0.24);
+      border-radius: var(--radius);
+      color: #C9B8B4;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .map-placeholder span {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    @media (min-width: 900px) {
+      .contacts-grid {
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 56px;
+        align-items: center;
+      }
+    }
+
+    /* ===== ФУТЕР ===== */
+    .site-footer {
+      padding: 26px 0;
+      background: var(--dark);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #C9B8B4;
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
+    /* ===== ДОСТУПНІСТЬ / АНКОРИ ===== */
+    #masters, #how, #contacts { scroll-margin-top: 92px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== ШАПКА ===== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="logo" href="#top">Ілона</a>
+
+      <nav class="nav" id="site-nav" aria-label="Головна навігація">
+        <a href="#masters">Майстри</a>
+        <a href="#how">Як записатись</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+
+      <a class="btn btn-primary btn-sm" href="#masters">Обрати майстра</a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Відкрити меню">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== ГОЛОВНИЙ ЕКРАН ===== -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Простір краси · Волочиськ</p>
+          <h1>Ваш майстер <em>у затишному</em> просторі</h1>
+          <p class="lead">
+            В «Ілоні» працюють незалежні майстри: кожен орендує своє робоче місце
+            та приймає гостей особисто. Оберіть майстра, напишіть йому напряму —
+            і домовтеся про зручний час.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#masters">Обрати майстра</a>
+            <a class="btn btn-ghost" href="#how">Як це працює</a>
+          </div>
+
+          <!-- TODO: вкажіть графік роботи салону -->
+          <p class="hours">
+            <span class="hours-label">Графік роботи</span>
+            <span>[ГОДИНИ РОБОТИ]</span>
+          </p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="arch">
+            <!-- TODO: замініть блок .photo-slot на фото салону:
+                 <img src="photo/salon.jpg" alt="Салон «Ілона» у Волочиську">
+                 Стилі .arch img уже задані (заповнення арки, object-fit: cover). -->
+            <div class="photo-slot">[ФОТО САЛОНУ]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== МАЙСТРИ ===== -->
+    <section class="section section--white" id="masters">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Команда</p>
+          <h2>Наші майстри</h2>
+          <p class="section-sub">
+            Кожен майстер працює самостійно: оберіть свого та запишіться напряму —
+            ціни й вільні години уточнюйте в нього.
+          </p>
+        </div>
+
+        <!-- Картки майстрів рендеряться з масиву masters у скрипті внизу файлу. -->
+        <div class="masters-grid" id="masters-grid"></div>
+
+        <noscript>
+          <p class="noscript-note">
+            Щоб побачити картки майстрів, увімкніть JavaScript
+            або зв’яжіться з салоном телефоном.
+          </p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ===== ЯК ЗАПИСАТИСЬ ===== -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Як це працює</p>
+          <h2>Як записатись</h2>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step">
+            <span class="step-num" aria-hidden="true">01</span>
+            <h3>Оберіть майстра</h3>
+            <p>Перегляньте картки вище: спеціалізація, послуги та ціни.</p>
+          </article>
+
+          <article class="step">
+            <span class="step-num" aria-hidden="true">02</span>
+            <h3>Напишіть йому напряму</h3>
+            <p>Натисніть «Записатись до майстра» — відкриється Telegram. Або напишіть у Viber чи зателефонуйте.</p>
+          </article>
+
+          <article class="step">
+            <span class="step-num" aria-hidden="true">03</span>
+            <h3>Домовтесь про час і приходьте</h3>
+            <p>Майстер підтвердить час і ціну та підкаже, як дістатися.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ОРЕНДА РОБОЧОГО МІСЦЯ ===== -->
+    <section class="section section--flush-top">
+      <div class="wrap">
+        <div class="rent-card">
+          <div>
+            <p class="eyebrow">Для майстрів</p>
+            <h2>Ви майстер? Орендуйте робоче місце в салоні «Ілона»</h2>
+            <p>
+              Затишний обладнаний простір у центрі Волочиська, окремі зони
+              та стабільний потік гостей. Розкажемо про умови телефоном.
+            </p>
+          </div>
+
+          <!-- TODO: вкажіть телефон для питань оренди -->
+          <a class="btn btn-light" href="tel:+380XXXXXXXXX">Дізнатись умови</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== КОНТАКТИ ===== -->
+    <section class="contacts" id="contacts">
+      <div class="wrap contacts-grid">
+        <div>
+          <p class="eyebrow">Контакти</p>
+          <h2>Завітайте до нас</h2>
+
+          <ul class="contact-list">
+            <li>
+              <span class="c-label">Адреса</span>
+              <!-- TODO: вкажіть точну адресу салону -->
+              <span class="c-value">[АДРЕСА]<br>Волочиськ</span>
+            </li>
+            <li>
+              <span class="c-label">Телефон</span>
+              <!-- TODO: замініть номер у тексті та в href (tel:+380...) -->
+              <span class="c-value"><a href="tel:+380XXXXXXXXX">[ТЕЛЕФОН]</a></span>
+            </li>
+            <li>
+              <span class="c-label">Графік роботи</span>
+              <!-- TODO: вкажіть графік роботи салону -->
+              <span class="c-value">[ГОДИНИ РОБОТИ]</span>
+            </li>
+          </ul>
+
+          <!-- TODO: замініть USERNAME на нік салону в Instagram -->
+          <a class="btn btn-outline-light" href="https://www.instagram.com/USERNAME" target="_blank" rel="noopener">Instagram</a>
+        </div>
+
+        <div class="map">
+          <!-- TODO: карта Google Maps. Видаліть .map-placeholder і вставте iframe:
+               <iframe
+                 src="https://www.google.com/maps/embed?pb=..."
+                 title="Мапа: салон «Ілона», Волочиськ"
+                 width="100%" height="100%" style="border:0"
+                 allowfullscreen loading="lazy"
+                 referrerpolicy="no-referrer-when-downgrade"></iframe>
+               Посилання: Google Maps → «Поділитися» → «Вставити карту». -->
+          <div class="map-placeholder">
+            [КАРТА GOOGLE MAPS]
+            <span>Вставте iframe карти в цей блок</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== ФУТЕР ===== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© Простір краси «Ілона», Волочиськ</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       ДАНІ МАЙСТРІВ — єдине місце для редагування команди й цін.
+
+       Щоб додати майстра, скопіюйте один об’єкт { ... } і змініть дані.
+         name     — ім’я майстра
+         role     — спеціалізація
+         photo    — шлях до фото, напр. "photo/olena.jpg".
+                    Порожній рядок "" показує плейсхолдер [ФОТО].
+         services — рівно 2 послуги: { name: "...", price: "..." }
+                    price — число або "___", поки ціна невідома
+         link     — куди веде кнопка «Записатись»:
+                    Telegram (https://t.me/нік), Viber або tel:+380...
+       ============================================================ */
+    const masters = [
+      {
+        name: "[Ім’я майстра]",
+        role: "Майстер манікюру",
+        photo: "",
+        services: [
+          { name: "Манікюр з покриттям", price: "___" },
+          { name: "Нарощування нігтів", price: "___" }
+        ],
+        // TODO: посилання на Telegram майстра
+        link: "https://t.me/USERNAME_1"
+      },
+      {
+        name: "[Ім’я майстра]",
+        role: "Перукар-стиліст",
+        photo: "",
+        services: [
+          { name: "Жіноча стрижка", price: "___" },
+          { name: "Фарбування", price: "___" }
+        ],
+        // TODO: посилання на Telegram майстра
+        link: "https://t.me/USERNAME_2"
+      },
+      {
+        name: "[Ім’я майстра]",
+        role: "Брови та вії",
+        photo: "",
+        services: [
+          { name: "Корекція та фарбування брів", price: "___" },
+          { name: "Ламінування вій", price: "___" }
+        ],
+        // TODO: посилання на Telegram майстра
+        link: "https://t.me/USERNAME_3"
+      },
+      {
+        name: "[Ім’я майстра]",
+        role: "Візажист",
+        photo: "",
+        services: [
+          { name: "Денний макіяж", price: "___" },
+          { name: "Весільний макіяж", price: "___" }
+        ],
+        // TODO: посилання на Telegram майстра
+        link: "https://t.me/USERNAME_4"
+      }
+    ];
+
+    /* ===== РЕНДЕР КАРТОК ===== */
+    const mastersGrid = document.getElementById("masters-grid");
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function (char) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char];
+      });
+    }
+
+    if (mastersGrid) {
+      mastersGrid.innerHTML = masters.map(function (master, index) {
+        const name = escapeHtml(master.name);
+        const photo = master.photo
+          ? '<img class="avatar-img" src="' + escapeHtml(master.photo) + '" alt="Фото: ' + name + '" width="88" height="88" loading="lazy">'
+          : '<span class="avatar" aria-hidden="true">[ФОТО]</span>';
+        const services = master.services.map(function (service) {
+          return '<li><span>' + escapeHtml(service.name) + '</span>' +
+                 '<span class="price">від ' + escapeHtml(service.price) + ' грн</span></li>';
+        }).join("");
+        const linkAttrs = /^https?:/.test(master.link) ? ' target="_blank" rel="noopener"' : '';
+
+        return '<article class="master-card" aria-labelledby="master-' + (index + 1) + '">' +
+          photo +
+          '<h3 id="master-' + (index + 1) + '">' + name + '</h3>' +
+          '<p class="master-role">' + escapeHtml(master.role) + '</p>' +
+          '<ul class="services">' + services + '</ul>' +
+          '<a class="btn btn-primary btn-card" href="' + escapeHtml(master.link) + '"' + linkAttrs + '>Записатись до майстра</a>' +
+        '</article>';
+      }).join("");
+    }
+
+    /* ===== МОБІЛЬНЕ МЕНЮ ===== */
+    const navToggle = document.querySelector(".nav-toggle");
+    const siteNav = document.getElementById("site-nav");
+
+    if (navToggle && siteNav) {
+      const closeNav = function () {
+        siteNav.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Відкрити меню");
+      };
+
+      navToggle.addEventListener("click", function () {
+        const isOpen = siteNav.classList.toggle("is-open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        navToggle.setAttribute("aria-label", isOpen ? "Закрити меню" : "Відкрити меню");
+      });
+
+      siteNav.addEventListener("click", function (event) {
+        if (event.target.closest("a")) closeNav();
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") closeNav();
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth >= 900) closeNav();
+      });
+    }
+  </script>
+</body>
+</html>
