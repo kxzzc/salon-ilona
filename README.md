@@ -78,12 +78,14 @@ python -m http.server 8000
 Сайт опубліковано:
 
 ```
-https://kxzzc.github.io/salon-ilona/
+https://salon-ilona.github.io/
 ```
 
-Репозиторій: https://github.com/kxzzc/salon-ilona
+Репозиторій: https://github.com/salon-ilona/salon-ilona.github.io
 
-Параметри публікації: публічний репозиторій, гілка `main`, папка `/ (root)`,
+Сайт живе в безкоштовній організації `salon-ilona`, тому адреса не містить
+особистого ніка. Параметри публікації: публічний репозиторій
+`salon-ilona.github.io`, гілка `main`, папка `/ (root)`,
 Source: **Deploy from a branch**.
 
 Щоб оновити сайт після редагування `index.html`:
@@ -95,28 +97,6 @@ git push
 ```
 
 GitHub Pages перебудує сторінку автоматично за 1–2 хвилини.
-
-### Як це було зроблено (GitHub CLI)
-
-```powershell
-cd salon-ilona
-gh repo create salon-ilona --public --source=. --remote=origin --push
-'{"source":{"branch":"main","path":"/"}}' | gh api --method POST repos/{owner}/salon-ilona/pages --input -
-```
-
-### Альтернатива — вручну через сайт GitHub
-
-1. Створіть на GitHub публічний репозиторій `salon-ilona` (без README, без .gitignore).
-2. Завантажте `index.html` і `README.md` у корінь репозиторію
-   (Add file → Upload files → Commit changes).
-3. Відкрийте **Settings → Pages**.
-4. У **Build and deployment → Source** виберіть **Deploy from a branch**.
-5. Branch: **main**, папка: **/ (root)** → **Save**.
-6. За 1–2 хвилини сайт буде доступний за адресою:
-
-```
-https://<ваш-нік>.github.io/salon-ilona/
-```
 
 `og:url` у `<head>` уже вказує на опубліковану адресу.
 
