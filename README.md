@@ -75,17 +75,36 @@ python -m http.server 8000
 
 ## Публікація на GitHub Pages
 
-Репозиторій: `salon-ilona`, гілка `main`, папка `/ (root)`.
+Сайт опубліковано:
 
-### Варіант 1 — через GitHub CLI
+```
+https://kxzzc.github.io/salon-ilona/
+```
+
+Репозиторій: https://github.com/kxzzc/salon-ilona
+
+Параметри публікації: публічний репозиторій, гілка `main`, папка `/ (root)`,
+Source: **Deploy from a branch**.
+
+Щоб оновити сайт після редагування `index.html`:
+
+```powershell
+git add index.html
+git commit -m "Оновлення сайту"
+git push
+```
+
+GitHub Pages перебудує сторінку автоматично за 1–2 хвилини.
+
+### Як це було зроблено (GitHub CLI)
 
 ```powershell
 cd salon-ilona
 gh repo create salon-ilona --public --source=. --remote=origin --push
-gh api -X POST repos/{owner}/salon-ilona/pages -f source[branch]=main -f source[path]=/
+'{"source":{"branch":"main","path":"/"}}' | gh api --method POST repos/{owner}/salon-ilona/pages --input -
 ```
 
-### Варіант 2 — вручну через сайт GitHub
+### Альтернатива — вручну через сайт GitHub
 
 1. Створіть на GitHub публічний репозиторій `salon-ilona` (без README, без .gitignore).
 2. Завантажте `index.html` і `README.md` у корінь репозиторію
@@ -99,7 +118,7 @@ gh api -X POST repos/{owner}/salon-ilona/pages -f source[branch]=main -f source[
 https://<ваш-нік>.github.io/salon-ilona/
 ```
 
-Після публікації оновіть `og:url` у `<head>` (замініть `[ЛОГІН]`).
+`og:url` у `<head>` уже вказує на опубліковану адресу.
 
 ## Плейсхолдери, які треба заповнити
 
@@ -112,4 +131,3 @@ https://<ваш-нік>.github.io/salon-ilona/
 - `USERNAME` — Instagram салону
 - `[ФОТО САЛОНУ]`, `[ФОТО]` — фотографії
 - `[КАРТА GOOGLE MAPS]` — iframe Google Maps
-- `[ЛОГІН]` — у `og:url` після публікації
